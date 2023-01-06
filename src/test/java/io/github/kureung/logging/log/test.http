@@ -1,0 +1,13 @@
+POST http://localhost:8080/log/hello
+Content-Type: application/json
+
+{
+  "gogo": "123",
+  "haha": "aa"
+}
+
+####
+GET http://localhost:8080/log/hello?haha=12
+
+####
+GET http://localhost:8080/log/hello/12
