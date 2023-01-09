@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@ConditionalOnMissingBean
+@ConditionalOnMissingBean(DefaultLoggingStrategy.class)
 public class DefaultLoggingStrategy implements LoggingStrategy {
 
     private final ObjectMapper objectMapper;
