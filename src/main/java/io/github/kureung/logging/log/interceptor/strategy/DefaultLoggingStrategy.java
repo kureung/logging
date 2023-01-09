@@ -5,22 +5,16 @@ import io.github.kureung.logging.log.interceptor.model.BodyFormatter;
 import io.github.kureung.logging.log.interceptor.model.CustomLog;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
-@RequiredArgsConstructor
-@ConditionalOnMissingBean(DefaultLoggingStrategy.class)
 public class DefaultLoggingStrategy implements LoggingStrategy {
 
-    private final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        CustomLog customLog = new CustomLog(request, response);
+    public void execute(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+        final CustomLog customLog = new CustomLog(request, response);
         log.info("{}", customLog.log(bodyFormatter()));
     }
 
