@@ -1,25 +1,25 @@
 package io.github.kureung.logging.log.interceptor;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.kureung.logging.log.interceptor.model.BodyFormatter;
-import io.github.kureung.logging.log.interceptor.model.CustomLog;
+import io.github.kureung.logging.log.interceptor.strategy.LoggingStrategyService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 @Log4j2
+@Component
+@RequiredArgsConstructor
 public class LoggingInterceptor implements HandlerInterceptor {
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final LoggingStrategyService loggingStrategyService;
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         if (didRequestPassThroughWrappingFilter(request, response)) {
-            CustomLog customLog = new CustomLog(request, response);
-            log.info("{}", customLog.log(bodyFormatter()));
+            loggingStrategyService.strategyExecution(request, response);
         }
     }
 
@@ -35,9 +35,5 @@ public class LoggingInterceptor implements HandlerInterceptor {
         return !request.getClass()
                 .getName()
                 .contains("SecurityContextHolderAwareRequestWrapper");
-    }
-
-    private BodyFormatter bodyFormatter() {
-        return new BodyFormatter(objectMapper);
     }
 }
