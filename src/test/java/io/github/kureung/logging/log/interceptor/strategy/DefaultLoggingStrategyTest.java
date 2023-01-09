@@ -41,7 +41,7 @@ class DefaultLoggingStrategyTest {
         logger.addAppender(listAppender);
 
         final DefaultLoggingStrategy defaultLoggingStrategy = new DefaultLoggingStrategy(objectMapper);
-        defaultLoggingStrategy.logging((HttpServletRequest) filterChain.getRequest(), (HttpServletResponse) filterChain.getResponse());
+        defaultLoggingStrategy.execute((HttpServletRequest) filterChain.getRequest(), (HttpServletResponse) filterChain.getResponse());
 
         List<ILoggingEvent> logs = listAppender.list;
         assertThat(logs).hasSizeGreaterThan(0);

@@ -4,5 +4,5 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public interface LoggingStrategy {
-    void logging(final HttpServletRequest request, final HttpServletResponse response);
+    void execute(final HttpServletRequest request, final HttpServletResponse response) throws Exception;
 }

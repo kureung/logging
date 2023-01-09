@@ -19,7 +19,7 @@ public class DefaultLoggingStrategy implements LoggingStrategy {
     private final ObjectMapper objectMapper;
 
     @Override
-    public void logging(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         CustomLog customLog = new CustomLog(request, response);
         log.info("{}", customLog.log(bodyFormatter()));
     }
